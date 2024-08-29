@@ -115,6 +115,7 @@ const TaskManagement = () => {
                   onBlur={formik.handleBlur}
                   value={formik.values.status}
                 >
+                  <option value="">Select One</option>
                   <option value="To_Do">To Do</option>
                   <option value="In_Progress">In Progress</option>
                   <option value="Completed">Completed</option>
@@ -127,7 +128,7 @@ const TaskManagement = () => {
               <label htmlFor="assigned_user" className="block text-gray-700">Assigned User</label>
               <select
                 id="assigned_user"
-                name="assignedU ser"
+                name="assignedUser"
                 className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
