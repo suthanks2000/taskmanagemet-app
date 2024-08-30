@@ -19,7 +19,6 @@ import EditUser from './Components/Edit_user';
 function App() {
   const {isLogged} = useSelector((state) => state.permission);
   const dispatch = useDispatch()
-  // const Navigate = useNavigate()
 
   useEffect(()=>{
     if(!isLogged){
@@ -29,24 +28,18 @@ function App() {
   
 const checkAuth = () =>{
   const auth = getAuth();
-onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, (user) => {
   if (user) {
     const uid = user.uid;
     localStorage.setItem("accessToken",user.accessToken)
     localStorage.setItem("uid",uid)
     dispatch(setisLogged(!isLogged))
     
-  } else {
-    // User is signed out
-    // ...
-    // Navigate('/')
-    logout()
-  }
+  } 
+
 });
 }
-const logout =()=>{
-  Navigate('/')
-}
+
   return (
     <>
       <BrowserRouter>
@@ -55,7 +48,7 @@ const logout =()=>{
             <Route path='/register' element={<Register/>}/>
             
           {
-            isLogged &&(
+            isLogged ?
             <>
             
             <Route path='/dashboard' element={<Dashboard/>}/>
@@ -66,7 +59,7 @@ const logout =()=>{
             <Route path='/edituser/:userid' element={<EditUser/>}/>
             
             </>
-            )
+            :null
           }
           
         </Routes>

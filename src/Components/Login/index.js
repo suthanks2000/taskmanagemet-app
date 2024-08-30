@@ -54,7 +54,7 @@ function Login() {
       confirmButtonText: 'OK',
     });
 
-    dispatch(setisLogged(!isLogged))
+    dispatch(setisLogged(true))
     Navigate('/showtasks')
   })
   .catch((error) => {
