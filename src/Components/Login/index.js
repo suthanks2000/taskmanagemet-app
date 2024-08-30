@@ -1,11 +1,14 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useDispatch, useSelector } from 'react-redux';
 import { setisLogged } from '../../Redux-Toolkit/Slices/permissonSlice';
 
+const MySwal = withReactContent(Swal);
 
 const validationSchema = yup.object({
   email: yup.string().email('Invalid email format').required('Email is required'),
@@ -28,30 +31,45 @@ function Login() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
       loginAuth(values)
+      
     },
   });
 
   const auth = getAuth();
-  const loginAuth = (value) =>{
-    signInWithEmailAndPassword(auth, value.email, value.password)
+  const loginAuth = async(value) =>{
+    await signInWithEmailAndPassword(auth, value.email, value.password)
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
   
     localStorage.setItem("accessToken",user.accessToken)
     localStorage.setItem("uid",user.uid)
-    console.log(user)
+    
+    // Show a popup on successful login
+    MySwal.fire({
+      title: 'Login Successful!',
+      text: 'You have successfully Login.',
+      icon: 'success',
+      confirmButtonText: 'OK',
+    });
+
     dispatch(setisLogged(!isLogged))
-    console.log(isLogged)
     Navigate('/showtasks')
   })
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-    alert("pls fill correct email and password")
+    
+    // Show a popup on failed login
+    MySwal.fire({
+      title: 'Login Faild!',
+      text: 'Pls Fill Correct Email And Password .',
+      icon: 'failed',
+      confirmButtonText: 'OK',
+    });
   });
+  formik.resetForm()
   }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">

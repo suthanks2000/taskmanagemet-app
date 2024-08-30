@@ -57,7 +57,7 @@ const ShowTasks = () => {
                     <td className="border p-2">{task.title}</td>
                     <td className="border p-2">{task.description}</td>
                     <td className="border p-2">{task.status}</td>
-                    <td className="border p-2">{task.assigned_user}</td>
+                    <td className="border p-2">{task.assignedUser}</td>
                     {userData.permission && userData.permission.includes("task_write") && (
                       <>
                         <td className='border p-2'>

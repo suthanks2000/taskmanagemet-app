@@ -40,11 +40,9 @@ function Register() {
     onSubmit: (values) => {
       console.log(values)
       registerAuth(values)
-    
-     
     },
   });
-  console.log(managerPer,userPer)
+
 
   const storeUserData = async (values,uid) =>{
       try {
@@ -56,7 +54,7 @@ function Register() {
           uid:uid,
           permission:values.role == "manager"?  managerPer:userPer
         });
-        console.log("Document written with ID: ", docRef.id);
+        // console.log("Document written with ID: ", docRef.id);
         // Show a popup on successful registration
       MySwal.fire({
         title: 'Registration Successful!',
@@ -69,6 +67,7 @@ function Register() {
     
       } catch (e) {
         console.error("Error adding document: ", e);
+        
       }
     
   }
@@ -89,8 +88,15 @@ function Register() {
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
+    MySwal.fire({
+      title: 'Registration Faild!',
+      text: 'Already this Email was Use.',
+      icon: 'failed',
+      confirmButtonText: 'OK',
+    });
   
   });
+  formik.resetForm()
   }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
